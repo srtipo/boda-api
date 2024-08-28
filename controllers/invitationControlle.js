@@ -19,7 +19,7 @@ invitationController.createInvitation = async (req, res) => {
   const repository = new InvitationRepository();
   const people= await invitationController.getPeople(data.people);
   const uuid = crypto.randomUUID();
-  const link = invitationController.getLink();
+  const link = invitationController.getLink(uuid);
   const response = await repository.createInvitation({...data, people, link,uuid});
   res.status(201).json(response);
 };
@@ -40,18 +40,16 @@ invitationController.getPeople =  async(peopleName) => {
     const peopleRepository = new PeopleRepository();
     let people = [];
     return  new Promise((resolve, reject) => {
-        peopleName.forEach( async(personName, index, array) => { 
-            console.log(personName);   
+        peopleName.forEach( async(personName, index, array) => {  
             const person = await peopleRepository.createPeople({name:personName, status:"PENDING"});
-            await people.push(person._id) 
+            people.push(person._id) 
             if (people.length === array.length ) resolve(people);
         });
     });
 }
-invitationController.getLink=()=>{
+invitationController.getLink=(id)=>{
     dotenv.config();
     const url =process.env.WEB_URL;
-    const id= crypto.randomUUID();
     const link = `${url}/invitations/${id}`;
     return link;
 
