@@ -52,7 +52,7 @@ invitationController.getLink=()=>{
     dotenv.config();
     const url =process.env.WEB_URL;
     const id= crypto.randomUUID();
-    const link = `${url}/invitation/${id}`;
+    const link = `${url}/invitations/${id}`;
     return link;
 
 }
