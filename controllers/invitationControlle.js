@@ -18,9 +18,10 @@ invitationController.createInvitation = async (req, res) => {
   const { data } = validateInvitationRequest(req.body);
   const repository = new InvitationRepository();
   const people= await invitationController.getPeople(data.people);
-  const uuid = crypto.randomUUID();
-  const link = invitationController.getLink(uuid);
-  const response = await repository.createInvitation({...data, people, link,uuid});
+  const {family} = data;
+  const familyName = family.replace(/ /g, "-");
+  const link = invitationController.getLink(familyName);
+  const response = await repository.createInvitation({...data, people, link,uuid:familyName});
   res.status(201).json(response);
 };
 invitationController.deleteInvitation = async (req, res) => {
@@ -48,6 +49,8 @@ invitationController.getPeople =  async(peopleName) => {
     });
 }
 invitationController.getLink=(id)=>{
+  //replaces ' ' to -
+  
     dotenv.config();
     const url =process.env.WEB_URL;
     const link = `${url}/invitations/${id}`;
