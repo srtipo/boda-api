@@ -6,11 +6,14 @@ import connectDB from './utils/connectDB.js';
 import errorHandlerMiddleware from './middlewares/errorHandlerMiddleware.js';
 import eventRouter from './routers/eventRouter.js';
 import invitationRouter from './routers/invitationRouter.js';
+import cors from 'cors';
 dotenv.config();
 
 
 connectDB();
 const app = express();
+//fix cors
+app.use(cors());
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
