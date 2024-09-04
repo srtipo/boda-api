@@ -7,8 +7,8 @@ export default class PeopleRepository {
         this.people=mongoose.model('people', peopleSchema);
     }
 
-     getPeople=async()=>{
-        return await this.people.find({});
+     getPeople=async({query})=>{
+        return await this.people.find({...query});
     }
     createPeople(data){
         const newPerson=new this.people(data);

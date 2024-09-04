@@ -1,9 +1,12 @@
+
 import PeopleRepository from "../repository/PeopleRepository.js";
-import { validatePeopleRequest, validatePartialPeopleRequest } from "../requests/peopleRequest.js";
+import { validatePeopleRequest, validatePartialPeopleRequest, validatePartialPeopleGetRequest } from "../requests/peopleRequest.js";
 const peopleController = {};
 
 peopleController.getPeople = async (req, res) => {
-    const response = await new PeopleRepository().getPeople();
+    const query = req.query;
+    const {data} = validatePartialPeopleGetRequest(query);
+    const response = await new PeopleRepository().getPeople({query:data});
     res.json(response);
 };
 

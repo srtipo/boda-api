@@ -7,6 +7,7 @@ import errorHandlerMiddleware from './middlewares/errorHandlerMiddleware.js';
 import eventRouter from './routers/eventRouter.js';
 import invitationRouter from './routers/invitationRouter.js';
 import cors from 'cors';
+import statisticsRouter from './routers/statisticsRouter.js';
 dotenv.config();
 
 
@@ -22,6 +23,7 @@ app.use(express.json());
 app.use('/people', peopleRouter);
 app.use('/event', eventRouter);
 app.use('/invitation', invitationRouter);
+app.use('/statistics', statisticsRouter);
 
 
 app.use(errorHandlerMiddleware);
